@@ -1,0 +1,634 @@
+/* ============================================================
+   PURPLE TEAM SCOREBOARD - Dark Cyber Theme
+   CSS-only overrides for the scoring engine Bootstrap 3 UI
+   ============================================================ */
+
+/* ---------- Root Variables ---------- */
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-card: #1c2333;
+  --bg-input: #21262d;
+  --border-color: #30363d;
+  --border-glow: #00d4ff;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --accent-cyan: #00d4ff;
+  --accent-green: #00ff41;
+  --accent-purple: #b388ff;
+  --accent-red: #ff4757;
+  --accent-yellow: #ffd93d;
+  --success: #2ea043;
+  --danger: #f85149;
+  --warning: #d29922;
+  --info: #00d4ff;
+  --link-color: #58a6ff;
+  --glow-soft: 0 0 15px rgba(0, 212, 255, 0.08);
+  --glow-medium: 0 0 20px rgba(0, 212, 255, 0.15);
+  --glow-strong: 0 0 30px rgba(0, 212, 255, 0.25);
+}
+
+/* ---------- Global ---------- */
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:hover,
+a:focus {
+  color: var(--accent-cyan);
+}
+
+hr {
+  border-top-color: var(--border-color);
+}
+
+/* ---------- Navbar ---------- */
+.navbar-inverse {
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  border-bottom: 2px solid var(--accent-cyan) !important;
+  box-shadow: 0 2px 20px rgba(0, 212, 255, 0.1);
+}
+
+.navbar-inverse .navbar-brand {
+  color: var(--accent-cyan) !important;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 16px;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+
+.navbar-inverse .navbar-brand:hover {
+  color: #fff !important;
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: var(--text-secondary) !important;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: var(--accent-cyan) !important;
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background-color: rgba(0, 212, 255, 0.1) !important;
+  color: var(--accent-cyan) !important;
+  border-bottom: 2px solid var(--accent-cyan);
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: var(--border-color);
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+  background-color: var(--accent-cyan);
+}
+
+.navbar-inverse .navbar-collapse {
+  border-color: var(--border-color) !important;
+}
+
+/* ---------- Dropdown ---------- */
+.dropdown-menu {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--glow-medium);
+}
+
+.dropdown-menu > li > a {
+  color: var(--text-primary) !important;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  background-color: rgba(0, 212, 255, 0.1) !important;
+  color: var(--accent-cyan) !important;
+}
+
+.dropdown-menu .divider {
+  background-color: var(--border-color);
+}
+
+/* ---------- Containers & Cards ---------- */
+.container {
+  color: var(--text-primary);
+}
+
+.jumbotron {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--glow-soft);
+}
+
+.jumbotron h1,
+.jumbotron h2,
+.jumbotron h3,
+.jumbotron p {
+  color: var(--text-primary) !important;
+}
+
+.md-page {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--glow-soft);
+}
+
+.panel {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+  box-shadow: var(--glow-soft);
+}
+
+.panel-default > .panel-heading {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.panel-body {
+  color: var(--text-primary);
+}
+
+.well {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+/* ---------- Tables ---------- */
+.table {
+  color: var(--text-primary);
+}
+
+.table > thead > tr > th {
+  border-bottom-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th {
+  border-top-color: var(--border-color);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: rgba(22, 27, 34, 0.5);
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+  background-color: var(--bg-card);
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: rgba(0, 212, 255, 0.05) !important;
+}
+
+.table-bordered {
+  border-color: var(--border-color);
+}
+
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > th,
+.table-bordered > tbody > tr > td {
+  border-color: var(--border-color);
+}
+
+/* DataTables overrides */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+  color: var(--text-secondary) !important;
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+  background-color: var(--bg-input) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: var(--text-secondary) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: rgba(0, 212, 255, 0.15) !important;
+  border-color: var(--accent-cyan) !important;
+  color: var(--accent-cyan) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: rgba(0, 212, 255, 0.1) !important;
+  border-color: var(--border-color) !important;
+  color: var(--accent-cyan) !important;
+}
+
+/* ---------- Scoreboard Status Colors ---------- */
+/* Green = passing, Red = failing */
+td[style*="background-color: #28a745"],
+td[style*="background-color: green"],
+td[style*="background-color:#28a745"],
+.bg-success,
+.label-success,
+.text-success {
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+td[style*="background-color: #dc3545"],
+td[style*="background-color: red"],
+td[style*="background-color:#dc3545"],
+.bg-danger,
+.label-danger,
+.text-danger {
+  text-shadow: 0 0 8px rgba(255, 71, 87, 0.3);
+}
+
+/* ---------- Forms & Inputs ---------- */
+.form-control {
+  background-color: var(--bg-input);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.25);
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+/* ---------- Login Page ---------- */
+.form-signin {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 30px !important;
+  box-shadow: var(--glow-medium);
+  margin-top: 80px !important;
+}
+
+.form-signin h2,
+.form-signin .form-signin-heading {
+  color: var(--accent-cyan) !important;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 20px;
+  text-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+}
+
+.form-signin .form-control {
+  background-color: var(--bg-input);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.form-signin .form-control:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+/* ---------- Buttons ---------- */
+.btn-default {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-default:hover,
+.btn-default:focus {
+  background-color: var(--bg-card);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.btn-primary {
+  background-color: rgba(0, 212, 255, 0.15);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  color: var(--bg-primary);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+.btn-success {
+  background-color: rgba(46, 160, 67, 0.2);
+  border-color: var(--success);
+  color: var(--accent-green);
+}
+
+.btn-success:hover {
+  background-color: var(--success);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.3);
+}
+
+.btn-danger {
+  background-color: rgba(248, 81, 73, 0.15);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(255, 71, 87, 0.3);
+}
+
+.btn-warning {
+  background-color: rgba(210, 153, 34, 0.15);
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.btn-warning:hover {
+  background-color: var(--warning);
+  color: var(--bg-primary);
+}
+
+.btn-info {
+  background-color: rgba(0, 212, 255, 0.1);
+  border-color: var(--info);
+  color: var(--info);
+}
+
+.btn-info:hover {
+  background-color: var(--info);
+  color: var(--bg-primary);
+}
+
+/* ---------- Alerts ---------- */
+.alert {
+  border-radius: 6px;
+}
+
+.alert-success {
+  background-color: rgba(46, 160, 67, 0.15);
+  border-color: var(--success);
+  color: var(--accent-green);
+}
+
+.alert-danger,
+.alert-error {
+  background-color: rgba(248, 81, 73, 0.15);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.alert-warning {
+  background-color: rgba(210, 153, 34, 0.15);
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.alert-info {
+  background-color: rgba(0, 212, 255, 0.1);
+  border-color: var(--info);
+  color: var(--accent-cyan);
+}
+
+.alert-fixed {
+  position: fixed;
+  top: 52px;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+/* ---------- Badges & Labels ---------- */
+.badge {
+  background-color: var(--accent-cyan);
+  color: var(--bg-primary);
+}
+
+.label-default {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.label-primary {
+  background-color: rgba(0, 212, 255, 0.2);
+  color: var(--accent-cyan);
+}
+
+.label-success {
+  background-color: rgba(46, 160, 67, 0.3);
+  color: var(--accent-green);
+}
+
+.label-danger {
+  background-color: rgba(248, 81, 73, 0.3);
+  color: var(--danger);
+}
+
+/* ---------- Headings ---------- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+}
+
+h1 {
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
+}
+
+/* ---------- Misc ---------- */
+.breadcrumb {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.breadcrumb > .active {
+  color: var(--text-secondary);
+}
+
+.breadcrumb > li + li::before {
+  color: var(--text-muted);
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.pagination > li > a:hover {
+  background-color: rgba(0, 212, 255, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.pagination > .active > a,
+.pagination > .active > a:hover {
+  background-color: rgba(0, 212, 255, 0.2);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.list-group-item {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.list-group-item:hover {
+  background-color: rgba(0, 212, 255, 0.05);
+}
+
+/* Code blocks */
+code {
+  background-color: var(--bg-secondary);
+  color: var(--accent-cyan);
+  border: 1px solid var(--border-color);
+}
+
+pre {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Override unauthorized page red bg */
+body[style*="background-color: red"] {
+  background-color: var(--accent-red) !important;
+}
+
+/* Permission toggle switches - make visible on dark */
+.permission-switch > label::before {
+  background: var(--text-muted) !important;
+}
+
+.permission-switch > input[type="checkbox"]:checked + label::before {
+  background: var(--accent-cyan) !important;
+}
+
+.permission-switch > input[type="checkbox"]:checked + label::after {
+  background: var(--accent-cyan) !important;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+/* Left-hand nav in admin */
+.lefthand-nav .list-group-item {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+.lefthand-nav .list-group-item.active {
+  background-color: rgba(0, 212, 255, 0.15);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: #fff;
+}
+
+/* ---------- Modal ---------- */
+.modal-content {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--glow-strong);
+  color: var(--text-primary);
+}
+
+.modal-header {
+  border-bottom-color: var(--border-color);
+}
+
+.modal-footer {
+  border-top-color: var(--border-color);
+}
+
+.modal-header .close {
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+.modal-header .close:hover {
+  color: var(--accent-cyan);
+}
+
+/* ---------- Tooltip / Popover ---------- */
+.tooltip-inner {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.popover {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+.popover-title {
+  background-color: var(--bg-secondary);
+  border-bottom-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.popover-content {
+  color: var(--text-primary);
+}

@@ -1,4 +1,7 @@
 version: '3.7'
+# Purple Team Scoring Engine - Docker Compose
+# Runs on jumphost - Web UI on port 5080
+# Nginx removed for training env (not needed for TLS termination)
 services:
   redis:
     image: "redis:7.0.4"
@@ -12,61 +15,19 @@ services:
       - redis:/data
     networks:
       - default
-    dns:
-      - 10.10.1.11
-      - 10.11.1.11
-      - 10.12.1.11
-      - 10.13.1.11
-      - 10.14.1.11
-      - 10.15.1.11
 
   mysql:
     image: mariadb:10
     environment:
-      - MYSQL_ROOT_PASSWORD=CHANGEME
+      - MYSQL_ROOT_PASSWORD=ScoringEngine2026!
       - MYSQL_DATABASE=scoring_engine
       - MYSQL_USER=se_user
-      - MYSQL_PASSWORD=CHANGEME
+      - MYSQL_PASSWORD=ScoringEngine2026!
     restart: on-failure
     volumes:
       - mysql:/var/lib/mysql
     networks:
       - default
-    dns:
-      - 10.10.1.11
-      - 10.11.1.11
-      - 10.12.1.11
-      - 10.13.1.11
-      - 10.14.1.11
-      - 10.15.1.11
-
-  nginx:
-    image: nginx:1.23.1
-    depends_on:
-      - web
-    ports:
-      - 80:80
-      - 443:443
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 30s
-      timeout: 3s
-      retries: 10
-    restart: on-failure
-    volumes:
-      - ./docker/nginx/files/web.conf:/etc/nginx/conf.d/default.conf
-      - ./docker/nginx/files/scoringengine.crt:/etc/nginx/scoringengine.crt
-      - ./docker/nginx/files/scoringengine.key:/etc/nginx/scoringengine.key
-      - ./scoring_engine/web/static/:/usr/share/nginx/html/static/
-    networks:
-      - default
-    dns:
-      - 10.10.1.11
-      - 10.11.1.11
-      - 10.12.1.11
-      - 10.13.1.11
-      - 10.14.1.11
-      - 10.15.1.11
 
   base:
     image: scoringengine/base
@@ -76,13 +37,6 @@ services:
       cache_from:
         - scoringengine/base
         - base:latest
-    dns:
-      - 10.10.1.11
-      - 10.11.1.11
-      - 10.12.1.11
-      - 10.13.1.11
-      - 10.14.1.11
-      - 10.15.1.11
 
   bootstrap:
     image: scoringengine/bootstrap
@@ -103,14 +57,6 @@ services:
     environment:
       - SCORINGENGINE_EXAMPLE
       - SCORINGENGINE_OVERWRITE_DB
-      - SCORINGENGINE_VERSION
-    dns:
-      - 10.10.1.11
-      - 10.11.1.11
-      - 10.12.1.11
-      - 10.13.1.11
-      - 10.14.1.11
-      - 10.15.1.11
 
   engine:
     image: scoringengine/engine
@@ -129,14 +75,6 @@ services:
       - default
     environment:
       - SCORINGENGINE_EXAMPLE
-      - SCORINGENGINE_VERSION
-    dns:
-      - 10.10.1.11
-      - 10.11.1.11
-      - 10.12.1.11
-      - 10.13.1.11
-      - 10.14.1.11
-      - 10.15.1.11
 
   worker:
     image: scoringengine/worker
@@ -152,16 +90,7 @@ services:
     restart: unless-stopped
     networks:
       - default
-    environment:
-      - SCORINGENGINE_VERSION
     privileged: true
-    dns:
-      - 10.10.1.11
-      - 10.11.1.11
-      - 10.12.1.11
-      - 10.13.1.11
-      - 10.14.1.11
-      - 10.15.1.11
 
   web:
     image: scoringengine/web
@@ -174,6 +103,8 @@ services:
     depends_on:
       - base
       - mysql
+    ports:
+      - "5080:5000"
     healthcheck:
       test: ["CMD", "curl", "-f", "localhost:5000"]
       interval: 30s
@@ -184,15 +115,6 @@ services:
       - default
     volumes:
       - injects:/var/uploads/
-    environment:
-      - SCORINGENGINE_VERSION
-    dns:
-      - 10.10.1.11
-      - 10.11.1.11
-      - 10.12.1.11
-      - 10.13.1.11
-      - 10.14.1.11
-      - 10.15.1.11
 
 volumes:
   injects:

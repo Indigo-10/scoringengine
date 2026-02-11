@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% block head %}
-  <title>Scoring Engine - {% block title %}{% endblock %}</title>
+  <title>Purple Team Scoreboard - {% block title %}{% endblock %}</title>
   <script src="{{ url_for('static', filename='vendor/js/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/js/bootstrap.min.js') }}"></script>
   {% endblock %}
@@ -14,13 +14,14 @@
   <link href="{{ url_for('static', filename='vendor/css/bootstrap-glyphicons.css') }}" rel="stylesheet">
   <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
   <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/cyber-theme.css') }}" rel="stylesheet">
 </head>
 {% if 'unauthorized' in request.path %}
 
 <body style="background-color: red">
   {% else %}
 
-  <body style="background-color: #f9f9f9;">
+  <body>
     {% endif %}
     <script>
       $(document).ready(function () {
@@ -52,7 +53,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Scoring Engine</a>
+          <a class="navbar-brand" href="/">Purple Team Scoreboard</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="">
           <ul class="nav navbar-nav">
