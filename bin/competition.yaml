@@ -234,8 +234,8 @@ teams:
     port: 3306
     points: 100
     accounts:
-    - username: wpuser
-      password: changeme
+    - username: wordpress_user
+      password: wordpress_password
     environments:
     - matching_content: "wp_"
       properties:
@@ -295,10 +295,10 @@ teams:
     port: 22
     points: 100
     accounts:
-    - username: root
+    - username: fedora
       password: YourRootPassword123!
     environments:
-    - matching_content: "root"
+    - matching_content: "fedora"
       properties:
       - name: commands
         value: "whoami"
