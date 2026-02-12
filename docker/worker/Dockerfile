@@ -44,11 +44,10 @@ RUN apt-get install -y dnsutils
 # Postgresql Check
 RUN apt-get install -y postgresql-client
 
-# RDP Check - freerdp3 from bookworm-backports
-RUN echo "deb http://deb.debian.org/debian bookworm-backports main" > /etc/apt/sources.list.d/backports.list && \
-    apt-get update && \
-    apt-get install -y -t bookworm-backports freerdp3-x11 && \
-    apt-get install -y xvfb
+# RDP Check - Install from Trixie (base is already Trixie, no backports needed)
+# Scoring disabled in competition.yaml, but package available for manual use
+RUN apt-get update && \
+    apt-get install -y freerdp3-x11 xvfb
 
 # Telnet Check
 RUN pip install -I "telnetlib3==1.0.1"
