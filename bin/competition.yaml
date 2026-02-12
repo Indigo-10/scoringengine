@@ -30,16 +30,17 @@ teams:
   # DC01 - Active Directory / DNS (10.1.0.122)
   # ═══════════════════════════════════════════════
 
-  - name: DC01-RDP
-    check_name: RDPCheck
-    host: 10.1.0.122
-    port: 3389
-    points: 100
-    accounts:
-    - username: Administrator
-      password: YourSecurePassword123!
-    environments:
-    - matching_content: "SUCCESS$"
+  # RDP Check disabled (freerdp3 adds build complexity)
+  # - name: DC01-RDP
+  #   check_name: RDPCheck
+  #   host: 10.1.0.122
+  #   port: 3389
+  #   points: 100
+  #   accounts:
+  #   - username: Administrator
+  #     password: YourSecurePassword123!
+  #   environments:
+  #   - matching_content: "SUCCESS$"
 
   - name: DC01-WinRM
     check_name: WinRMCheck
@@ -122,16 +123,17 @@ teams:
   # FTP - Windows 11 Pro Workstation (10.1.3.27)
   # ═══════════════════════════════════════════════
 
-  - name: FTP-RDP
-    check_name: RDPCheck
-    host: 10.1.3.27
-    port: 3389
-    points: 100
-    accounts:
-    - username: Administrator
-      password: YourSecurePassword123!
-    environments:
-    - matching_content: "SUCCESS$"
+  # RDP Check disabled (freerdp3 adds build complexity)
+  # - name: FTP-RDP
+  #   check_name: RDPCheck
+  #   host: 10.1.3.27
+  #   port: 3389
+  #   points: 100
+  #   accounts:
+  #   - username: Administrator
+  #     password: YourSecurePassword123!
+  #   environments:
+  #   - matching_content: "SUCCESS$"
 
   - name: FTP-FTP
     check_name: FTPCheck

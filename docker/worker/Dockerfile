@@ -2,6 +2,9 @@ FROM scoringengine/base
 
 USER root
 
+# Speed up apt operations by avoiding interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN \
   apt-get update && \
   # apt-transport-https not needed on modern Debian (built into apt)
@@ -41,9 +44,11 @@ RUN apt-get install -y dnsutils
 # Postgresql Check
 RUN apt-get install -y postgresql-client
 
-# RDP Check
-RUN apt-get update && apt-get install -y freerdp3-x11
-RUN apt-get install -y xvfb
+# RDP Check - freerdp3 from bookworm-backports
+RUN echo "deb http://deb.debian.org/debian bookworm-backports main" > /etc/apt/sources.list.d/backports.list && \
+    apt-get update && \
+    apt-get install -y -t bookworm-backports freerdp3-x11 && \
+    apt-get install -y xvfb
 
 # Telnet Check
 RUN pip install -I "telnetlib3==1.0.1"
