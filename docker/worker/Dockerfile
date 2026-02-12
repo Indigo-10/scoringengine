@@ -4,8 +4,8 @@ USER root
 
 RUN \
   apt-get update && \
-  # apt-get install -y apt-transport-https software-properties-common
-  apt-get install -y apt-transport-https gpg
+  # apt-transport-https not needed on modern Debian (built into apt)
+  apt-get install -y gpg
 
 # ICMP Check
 RUN apt-get install -y iputils-ping
