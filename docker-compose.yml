@@ -19,10 +19,10 @@ services:
   mysql:
     image: mariadb:10
     environment:
-      - MYSQL_ROOT_PASSWORD=ScoringEngine2026!
+      - MYSQL_ROOT_PASSWORD=ScoringEngine2026
       - MYSQL_DATABASE=scoring_engine
       - MYSQL_USER=se_user
-      - MYSQL_PASSWORD=ScoringEngine2026!
+      - MYSQL_PASSWORD=ScoringEngine2026
     restart: on-failure
     volumes:
       - mysql:/var/lib/mysql
