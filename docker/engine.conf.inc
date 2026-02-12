@@ -9,7 +9,7 @@ upload_folder = /var/uploads
 
 debug = False
 
-db_uri = mysql://se_user:CHANGEME@mysql/scoring_engine?charset=utf8mb4
+db_uri = mysql://se_user:ScoringEngine2026!@mysql/scoring_engine?charset=utf8mb4
 
 # Set to -1 to use default number of processors for tasks
 # else, set to number of concurrent tasks
