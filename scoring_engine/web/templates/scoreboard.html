@@ -10,62 +10,63 @@
     <hr>
     <div id="teamLine" style="width: 100%; height:400px;"></div>
     <script>
+        // Dark theme colors
+        var darkText = '#e6edf3';
+        var darkMuted = '#8b949e';
+        var darkBorder = '#30363d';
+        var darkBg = 'transparent';
+        var cyanAccent = '#00d4ff';
+
         // Bar chart for all teams
         var teamBarChart = echarts.init(document.getElementById('teamBar'));
-        teamBarChart.showLoading();
+        teamBarChart.showLoading({ color: cyanAccent, textColor: darkText, maskColor: 'rgba(13,17,23,0.8)' });
 
         const serviceScores = [];
         const injectScores = [];
-        // const totalScores = [];
 
         $.getJSON('/api/scoreboard/get_bar_data').done(function (data) {
-            // Service Scores
             echarts.util.each(data.service_scores, function (score, index) {
-                serviceScores.push({
-                    value: score,
-                    // itemStyle: {
-                    //     color: '#5470c6'
-                    // }
-                });
+                serviceScores.push({ value: score });
             });
-            // Inject Scores
             echarts.util.each(data.inject_scores, function (score, index) {
-                injectScores.push({
-                    value: score,
-                    // itemStyle: {
-                    //     color: '#ee6666'
-                    // }
-                });
+                injectScores.push({ value: score });
             });
-            // Total
-            // for( var i = 0; i < serviceScores.length; i++)
-            // {
-            //     // Unary to convert to number
-            //     totalScores.push(+serviceScores[i].value + +injectScores[i].value);
-            // }
             teamBarChart.hideLoading();
             teamBarChart.setOption({
                 title: {
                     text: 'Total Scores',
                     x: 'center',
+                    textStyle: { color: darkText, fontSize: 18, fontWeight: 700 }
                 },
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    backgroundColor: '#161b22',
+                    borderColor: darkBorder,
+                    textStyle: { color: darkText }
+                },
+                legend: {
+                    top: 30,
+                    textStyle: { color: darkMuted }
                 },
                 grid: {
                     left: '3%',
                     right: '4%',
                     bottom: '3%',
+                    top: 60,
                     containLabel: true
                 },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: data.labels,
-                    }
-                ],
+                xAxis: [{
+                    type: 'category',
+                    data: data.labels,
+                    axisLabel: { color: darkMuted },
+                    axisLine: { lineStyle: { color: darkBorder } },
+                    axisTick: { lineStyle: { color: darkBorder } }
+                }],
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLabel: { color: darkMuted },
+                    axisLine: { lineStyle: { color: darkBorder } },
+                    splitLine: { lineStyle: { color: darkBorder, opacity: 0.3 } }
                 },
                 series: [
                     {
@@ -73,46 +74,28 @@
                         data: serviceScores,
                         type: 'bar',
                         stack: 'x',
-                        // label: {
-                        //     show: true
-                        // },
+                        itemStyle: { color: cyanAccent }
                     },
                     {
                         name: 'Injects',
                         data: injectScores,
                         type: 'bar',
                         stack: 'x',
-                        // label: {
-                        //     show: true
-                        // },
-
+                        itemStyle: { color: '#b388ff' }
                     },
-                    // {
-                    //     name: 'Total',
-                    //     data: totalScores,
-                    //     type: 'bar',
-                    //     stack: 'x',
-                    // },
                 ]
             });
         });
 
-        // Update chart every 30 seconds
         setInterval(function () {
             const serviceScores = [];
             const injectScores = [];
             $.get('/api/scoreboard/get_bar_data').done(function (data) {
-                // Service Scores
                 echarts.util.each(data.service_scores, function (score, index) {
-                    serviceScores.push({
-                        value: score,
-                    });
+                    serviceScores.push({ value: score });
                 });
-                // Inject Scores
                 echarts.util.each(data.inject_scores, function (score, index) {
-                    injectScores.push({
-                        value: score,
-                    });
+                    injectScores.push({ value: score });
                 });
                 teamBarChart.setOption({
                     series: [
@@ -126,7 +109,7 @@
     <script>
         // Line chart for all teams
         var teamLineChart = echarts.init(document.getElementById('teamLine'));
-        teamLineChart.showLoading();
+        teamLineChart.showLoading({ color: cyanAccent, textColor: darkText, maskColor: 'rgba(13,17,23,0.8)' });
 
         const seriesList = [];
         $.getJSON('/api/scoreboard/get_line_data').done(function (data) {
@@ -136,7 +119,10 @@
                     type: 'line',
                     data: team.scores,
                     itemStyle: {
-                        color: team.color
+                        color: team.color === 'Blue' ? cyanAccent : team.color
+                    },
+                    lineStyle: {
+                        width: 2
                     },
                     showSymbol: false
                 });
@@ -144,34 +130,45 @@
             teamLineChart.hideLoading();
             teamLineChart.setOption({
                 title: {
-                    text: 'Service Scores',
+                    text: 'Service Scores Over Time',
                     x: 'center',
+                    textStyle: { color: darkText, fontSize: 18, fontWeight: 700 }
                 },
                 tooltip: {
-                    trigger: 'axis'
+                    trigger: 'axis',
+                    backgroundColor: '#161b22',
+                    borderColor: darkBorder,
+                    textStyle: { color: darkText }
+                },
+                legend: {
+                    top: 30,
+                    textStyle: { color: darkMuted }
                 },
                 grid: {
                     left: '3%',
                     right: '4%',
                     bottom: '3%',
+                    top: 60,
                     containLabel: true
                 },
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: data.rounds
+                    data: data.rounds,
+                    axisLabel: { color: darkMuted },
+                    axisLine: { lineStyle: { color: darkBorder } },
+                    axisTick: { lineStyle: { color: darkBorder } }
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLabel: { color: darkMuted },
+                    axisLine: { lineStyle: { color: darkBorder } },
+                    splitLine: { lineStyle: { color: darkBorder, opacity: 0.3 } }
                 },
                 series: seriesList,
-                // label: {
-                //     show: true
-                // },
             });
         });
 
-        // Update chart every 30 seconds
         setInterval(function () {
             const seriesList = [];
             $.get('/api/scoreboard/get_line_data').done(function (data) {

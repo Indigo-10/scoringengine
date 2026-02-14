@@ -2,138 +2,264 @@
 {% block title %}Overview{% endblock %}
 {% block head %}
 {{ super() }}
-<script src="{{ url_for('static', filename='vendor/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ url_for('static', filename='vendor/js/dataTables.bootstrap.min.js') }}"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='vendor/css/dataTables.bootstrap.min.css') }}" />
 {% endblock %}
 {% block content %}
-<div class="container-fluid md-page">
-    <div class="row">
-        <h2 id="round_number" class="text-center"></h2>
-        <h4 id="round_start" class="text-center"></h4>
+
+<div class="overview-wrap">
+    <!-- Score Header -->
+    <div class="ov-header">
+        <div class="ov-round">
+            <div class="ov-round-num" id="round_number">ROUND --</div>
+            <div class="ov-round-time" id="round_start">Waiting for data...</div>
+        </div>
+        <div class="ov-scores">
+            <div class="ov-stat-card">
+                <div class="ov-stat-label">SCORE</div>
+                <div class="ov-stat-value ov-score-val" id="total_score">--</div>
+            </div>
+            <div class="ov-stat-card">
+                <div class="ov-stat-label">RANK</div>
+                <div class="ov-stat-value ov-rank-val" id="current_place">--</div>
+            </div>
+            <div class="ov-stat-card ov-stat-services">
+                <div class="ov-stat-label">SERVICES</div>
+                <div class="ov-stat-value">
+                    <span class="svc-up" id="up_count">-</span>
+                    <span class="svc-arrow-up">UP</span>
+                    <span class="svc-sep">/</span>
+                    <span class="svc-down" id="down_count">-</span>
+                    <span class="svc-arrow-down">DN</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-        <table id="overview" class="table table-striped table-bordered table-compact" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th></th>
-                    {% for team in teams %}
-                    <th>{{ team.name }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-        </table>
-        <div id='hint'>Hover over status icon to get host:port information</div>
-        <div id='overview_api_reference'>Want a json formatted version of this data (including ip addresses)? <a
-                href="{{ url_for('api.overview_data') }}">Here</a></div>
-        <script>
-            function refreshheader() {
-                $.ajax({
-                    cache: false,
-                    url: '/api/overview/get_round_data',
-                    dataType: 'json',
-                    success: function (data) {
-                        $('#round_number').text("Round " + data.number);
-                        $('#round_start').text(data.round_start);
-                    }
-                });
-            }
 
-            // Populate services table
-            var overview = $('#overview').DataTable({
-                'ajax': '/api/overview/get_data',
-                'paging': false,
-                'bSort': false,
-                'info': false,
-                'searching': false,
-                'scrollX': true,
-                'columnDefs': [
-                    { "width": "10%", "targets": 0 }
-                ],
-                'createdRow': function (row, data, index) {
-                    $('td', row).each(function () {
-                        var value = $(this).html();
-                        var column_num = $(this).index();
-                        switch (index) {
-                            // Current Score
-                            case 0:
-                                if (column_num == 0) {
-                                    var html_str = `<span style="font-weight:bold">${value}</span>`
-                                    $(this).html(html_str);
-                                } else {
-                                    var html_str = parseFloat(`${value}`).toLocaleString();
-                                    $(this).html(html_str);
-                                }
-                                break;
-                            // Current Place
-                            case 1:
-                                if (column_num == 0) {
-                                    html_str = `<span style="font-weight:bold">${value}</span>`
-                                    $(this).html(html_str);
-                                    // Add Some Ribbons
-                                } else {
-                                    if (value == 1) {
-                                        $(this).html(`${value} <i class="glyphicon glyphicon-tags" style="color: #C98910"></i>`);
-                                    } else if (value == 2) {
-                                        $(this).html(`${value} <i class="glyphicon glyphicon-tags" style="color: #A8A8A8"></i>`);
-                                    } else if (value == 3) {
-                                        $(this).html(`${value} <i class="glyphicon glyphicon-tags" style="color: #965A38"></i>`);
-                                    }
-                                }
-                                break;
-                            case 2:
-                                // Up and down services ratio
-                                if (column_num == 0) {
-                                    html_str = `<span style="font-weight:bold">${value}</span>`
-                                    $(this).html(html_str);
-                                } else {
-                                    html_str = `${value}`
-                                    $(this).html(html_str);
-                                }
-                                break;
-                            default:
-                                // Service Name
-                                if (column_num == 0) {
-                                    html_str = `<span style="font-weight:bold">${value}</span>`
-                                    $(this).html(html_str);
-                                    break;
-                                }
-
-                                if (value == 'true') {
-                                    var image_icon = 'glyphicon-ok';
-                                    var image_color = 'green';
-                                }
-                                else if (value == 'false') {
-                                    var image_icon = 'glyphicon-remove';
-                                    var image_color = 'red';
-                                }
-                                else {
-                                    image_icon = 'glyphicon-question-sign';
-                                    image_color = 'black';
-                                }
-
-                                html_str = `<span class="glyphicon ${image_icon}" style="color:${image_color}"></span>`;
-                                $(this).html(html_str);
-                        }
-                    })
-                }
-            });
-
-            $(document).ready(function () {
-                // Disable datatables error reporting
-                $.fn.dataTable.ext.errMode = 'none';
-
-                // Populate our header
-                refreshheader();
-                setInterval(function () {
-                    refreshheader()
-                }, 30000);
-
-                setInterval(function () {
-                    overview.ajax.reload();
-                }, 30000);
-            });
-        </script>
+    <!-- Machine Grid -->
+    <div class="ov-grid" id="machine_grid">
+        <div class="ov-loading">Loading service data...</div>
     </div>
 </div>
+
+<!-- Floating tooltip -->
+<div class="ov-tooltip" id="ov_tooltip"></div>
+
+<script>
+// ── Static metadata (check behavior descriptions + points from competition.yaml) ──
+// These describe WHAT each check does, not WHERE. IPs/ports come from the API.
+var POINTS = {
+    'DC01-WinRM': 100, 'DC01-LDAP': 100, 'DC01-DNS': 100, 'DC01-SMB': 100, 'DC01-ICMP': 50,
+    'FTP-FTP': 150, 'FTP-ICMP': 50,
+    'WKST1-SSH': 150, 'WKST1-ICMP': 50,
+    'Ecommerce-HTTP': 150, 'Ecommerce-SSH': 100, 'Ecommerce-MySQL': 100, 'Ecommerce-ICMP': 50,
+    'Mail-HTTP': 100, 'Mail-SMTP': 150, 'Mail-SSH': 100, 'Mail-ICMP': 50,
+    'Splunk-HTTP': 150, 'Splunk-SSH': 100, 'Splunk-ICMP': 50
+};
+
+var DESCS = {
+    'WinRM':  'WinRM command execution check',
+    'LDAP':   'LDAP bind + user query',
+    'DNS':    'DNS A-record lookup',
+    'SMB':    'SMB share access check',
+    'ICMP':   'ICMP ping (1 packet)',
+    'FTP':    'FTP login + file verify',
+    'SSH':    'SSH login + command execution',
+    'HTTP':   'HTTP GET + content match',
+    'MySQL':  'MySQL login + query',
+    'SMTP':   'SMTP send test email'
+};
+
+// OS hints: if a machine has WinRM or SMB checks, it's Windows
+function guessOS(checks) {
+    for (var i = 0; i < checks.length; i++) {
+        var c = checks[i].check;
+        if (c === 'WinRM' || c === 'SMB' || c === 'RDP') return 'win';
+    }
+    return 'linux';
+}
+
+// ── Data fetching ──────────────────────────────────────────
+var detailedData = {};  // Stores host:port from /api/overview/data
+
+function refresh() {
+    $.getJSON('/api/overview/get_round_data', function(d) {
+        $('#round_number').text('ROUND ' + d.number);
+        $('#round_start').text(d.round_start);
+    });
+
+    // Fetch detailed data (has host:port per service) for tooltips
+    $.getJSON('/api/overview/data', function(data) {
+        detailedData = data;
+    });
+
+    $.getJSON('/api/overview/get_data', function(resp) {
+        if (!resp.data || resp.data.length < 3) return;
+
+        // Header stats
+        var score = parseFloat(resp.data[0][1] || 0).toLocaleString();
+        var place = resp.data[1][1];
+        var ratioRaw = (resp.data[2][1] || '').replace(/<[^>]+>/g, '');
+        var nums = ratioRaw.match(/(\d+)/g) || ['0', '0'];
+
+        $('#total_score').text(score);
+        $('#up_count').text(nums[0]);
+        $('#down_count').text(nums[1]);
+
+        var placeNum = parseInt(place);
+        if (placeNum === 1) $('#current_place').html('#1 <span class="rank-badge rank-gold">1ST</span>');
+        else if (placeNum === 2) $('#current_place').html('#2 <span class="rank-badge rank-silver">2ND</span>');
+        else if (placeNum === 3) $('#current_place').html('#3 <span class="rank-badge rank-bronze">3RD</span>');
+        else $('#current_place').text('#' + place);
+
+        // Group services by machine (dynamically from API data)
+        var grouped = {};
+        var machineOrder = [];
+        for (var i = 3; i < resp.data.length; i++) {
+            var name = resp.data[i][0];
+            var status = resp.data[i][1];
+            var dash = name.indexOf('-');
+            var mKey = name.substring(0, dash);
+            var cKey = name.substring(dash + 1);
+            if (!grouped[mKey]) {
+                grouped[mKey] = [];
+                machineOrder.push(mKey);
+            }
+            grouped[mKey].push({ full: name, check: cKey, pass: status === true || status === 'true' });
+        }
+
+        render(grouped, machineOrder);
+    });
+}
+
+// ── Find IP for a machine from detailed API data ──────────
+function getMachineIP(machKey, checks) {
+    // Search all teams in detailedData for this machine's IP
+    for (var team in detailedData) {
+        for (var svc in detailedData[team]) {
+            if (svc.indexOf(machKey + '-') === 0) {
+                return detailedData[team][svc].host || '?';
+            }
+        }
+    }
+    return '?';
+}
+
+function getServiceDetail(svcName) {
+    for (var team in detailedData) {
+        if (detailedData[team][svcName]) {
+            return detailedData[team][svcName];
+        }
+    }
+    return null;
+}
+
+// ── Rendering ──────────────────────────────────────────────
+function render(grouped, machineOrder) {
+    var grid = $('#machine_grid');
+    grid.empty();
+
+    for (var m = 0; m < machineOrder.length; m++) {
+        var mKey = machineOrder[m];
+        var checks = grouped[mKey] || [];
+        var up = 0;
+        for (var j = 0; j < checks.length; j++) { if (checks[j].pass) up++; }
+        var total = checks.length;
+        var pct = total > 0 ? Math.round((up / total) * 100) : 0;
+
+        var state = pct === 100 ? 'mc-up' : pct === 0 ? 'mc-down' : 'mc-partial';
+        var os = guessOS(checks);
+        var osLabel = os === 'win' ? 'WIN' : 'LNX';
+        var ip = getMachineIP(mKey, checks);
+
+        var h = '';
+        h += '<div class="mc ' + state + '">';
+
+        // Card header
+        h += '<div class="mc-head">';
+        h += '  <div class="mc-title">';
+        h += '    <span class="mc-os mc-os-' + os + '">' + osLabel + '</span>';
+        h += '    <span class="mc-name">' + mKey + '</span>';
+        h += '  </div>';
+        h += '  <div class="mc-ip">' + ip + '</div>';
+        h += '</div>';
+
+        // Health bar
+        h += '<div class="mc-hbar-wrap">';
+        h += '  <div class="mc-hbar" style="width:' + pct + '%"></div>';
+        h += '  <span class="mc-hbar-txt">' + up + '/' + total + ' checks</span>';
+        h += '</div>';
+
+        // Tiles
+        h += '<div class="mc-tiles">';
+        for (var c = 0; c < checks.length; c++) {
+            var ck = checks[c];
+            var cls = ck.pass ? 'ct-pass' : 'ct-fail';
+            var icon = ck.pass ? '&#10003;' : '&#10007;';
+            var pts = POINTS[ck.full] || 0;
+            h += '<div class="ct ' + cls + '" data-svc="' + ck.full + '">';
+            h += '  <div class="ct-icon">' + icon + '</div>';
+            h += '  <div class="ct-name">' + ck.check + '</div>';
+            h += '  <div class="ct-pts">' + pts + ' pts</div>';
+            h += '</div>';
+        }
+        h += '</div>';
+
+        h += '</div>';
+        grid.append(h);
+    }
+
+    // Tooltip events
+    $('.ct').on('mouseenter', function(e) {
+        tooltipShow(e, $(this).data('svc'), $(this).hasClass('ct-pass'));
+    }).on('mousemove', function(e) {
+        tooltipMove(e);
+    }).on('mouseleave', function() {
+        $('#ov_tooltip').removeClass('ov-tooltip-visible');
+    });
+}
+
+// ── Tooltip ────────────────────────────────────────────────
+function tooltipShow(e, svc, passing) {
+    var pts = POINTS[svc] || '?';
+    var dash = svc.indexOf('-');
+    var checkKey = svc.substring(dash + 1);
+    var desc = DESCS[checkKey] || checkKey + ' check';
+
+    // Get host:port from API data (dynamic, not hardcoded)
+    var detail = getServiceDetail(svc);
+    var targetStr = '?:?';
+    if (detail) {
+        targetStr = detail.host + (detail.port ? ':' + detail.port : '');
+    }
+
+    var st = passing ? 'PASSING' : 'FAILING';
+    var stCls = passing ? 'tt-st-pass' : 'tt-st-fail';
+
+    var html = '';
+    html += '<div class="tt-head">' + svc + '</div>';
+    html += '<div class="tt-target">' + targetStr + '</div>';
+    html += '<div class="tt-pts">' + pts + ' points per round</div>';
+    html += '<div class="tt-line"></div>';
+    html += '<div class="tt-desc">' + desc + '</div>';
+    html += '<div class="tt-status ' + stCls + '">' + st + '</div>';
+
+    $('#ov_tooltip').html(html).addClass('ov-tooltip-visible');
+    tooltipMove(e);
+}
+
+function tooltipMove(e) {
+    var tt = document.getElementById('ov_tooltip');
+    var x = e.clientX + 16;
+    var y = e.clientY + 16;
+    if (x + 300 > window.innerWidth) x = e.clientX - 316;
+    if (y + 200 > window.innerHeight) y = e.clientY - 220;
+    tt.style.left = x + 'px';
+    tt.style.top = y + 'px';
+}
+
+// ── Init ───────────────────────────────────────────────────
+$(document).ready(function() {
+    refresh();
+    setInterval(refresh, 30000);
+});
+</script>
 {% endblock %}

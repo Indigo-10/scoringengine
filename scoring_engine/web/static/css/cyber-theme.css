@@ -632,3 +632,490 @@ body[style*="background-color: red"] {
 .popover-content {
   color: var(--text-primary);
 }
+
+/* ============================================================
+   OVERVIEW PAGE - Modern Grid Layout
+   ============================================================ */
+
+/* ── Page wrapper ── */
+.overview-wrap {
+  max-width: 1440px;
+  margin: 24px auto;
+  padding: 0 24px;
+}
+
+/* ── Header bar ── */
+.ov-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 36px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 212, 255, 0.04) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--glow-medium);
+}
+
+.ov-round-num {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.ov-round-time {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, monospace;
+}
+
+/* ── Score cards ── */
+.ov-scores {
+  display: flex;
+  gap: 16px;
+}
+
+.ov-stat-card {
+  text-align: center;
+  padding: 14px 28px;
+  background: rgba(0, 212, 255, 0.04);
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  border-radius: 14px;
+  min-width: 130px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.ov-stat-card:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);
+}
+
+.ov-stat-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.ov-stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ov-score-val {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+/* ── Services up/down ── */
+.svc-up {
+  color: var(--accent-green);
+  font-weight: 800;
+}
+
+.svc-arrow-up {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  letter-spacing: 1px;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+.svc-sep {
+  color: var(--text-muted);
+  margin: 0 6px;
+  font-weight: 400;
+}
+
+.svc-down {
+  color: var(--accent-red);
+  font-weight: 800;
+}
+
+.svc-arrow-down {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  letter-spacing: 1px;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+/* ── Rank badges ── */
+.rank-badge {
+  display: inline-block;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.rank-gold {
+  background: linear-gradient(135deg, #C98910, #F0D050);
+  color: #1a1a1a;
+  box-shadow: 0 0 12px rgba(201, 137, 16, 0.4);
+}
+
+.rank-silver {
+  background: linear-gradient(135deg, #8a8a8a, #c0c0c0);
+  color: #1a1a1a;
+}
+
+.rank-bronze {
+  background: linear-gradient(135deg, #965A38, #c07840);
+  color: #1a1a1a;
+}
+
+/* ── Machine grid ── */
+.ov-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.ov-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* ── Machine card ── */
+.mc {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  transition: transform 0.25s, border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.mc::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 16px 16px 0 0;
+}
+
+.mc-up::before {
+  background: linear-gradient(90deg, var(--accent-green), #00d4ff);
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.3);
+}
+
+.mc-down::before {
+  background: linear-gradient(90deg, var(--accent-red), #ff7b54);
+  box-shadow: 0 0 12px rgba(255, 71, 87, 0.3);
+}
+
+.mc-partial::before {
+  background: linear-gradient(90deg, var(--accent-yellow), #ffaa00);
+  box-shadow: 0 0 12px rgba(255, 217, 61, 0.3);
+}
+
+.mc:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), var(--glow-medium);
+}
+
+/* ── Machine card header ── */
+.mc-head {
+  margin-bottom: 14px;
+}
+
+.mc-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.mc-os {
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+.mc-os-win {
+  background: rgba(0, 120, 215, 0.2);
+  color: #4fc3f7;
+  border: 1px solid rgba(0, 120, 215, 0.3);
+}
+
+.mc-os-linux {
+  background: rgba(255, 170, 0, 0.15);
+  color: #ffb74d;
+  border: 1px solid rgba(255, 170, 0, 0.25);
+}
+
+.mc-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.mc-ip {
+  font-size: 0.8rem;
+  color: var(--accent-cyan);
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, monospace;
+  opacity: 0.85;
+}
+
+.mc-desc {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+}
+
+/* ── Health bar ── */
+.mc-hbar-wrap {
+  position: relative;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 3px;
+  margin: 14px 0 18px;
+  overflow: visible;
+}
+
+.mc-hbar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.mc-up .mc-hbar {
+  background: linear-gradient(90deg, var(--accent-green), #00d4ff);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.25);
+}
+
+.mc-partial .mc-hbar {
+  background: linear-gradient(90deg, var(--accent-yellow), var(--accent-green));
+  box-shadow: 0 0 8px rgba(255, 217, 61, 0.2);
+}
+
+.mc-down .mc-hbar {
+  background: var(--accent-red);
+  box-shadow: 0 0 8px rgba(255, 71, 87, 0.2);
+  width: 100% !important;
+  opacity: 0.15;
+}
+
+.mc-hbar-txt {
+  position: absolute;
+  right: 0;
+  top: -20px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* ── Check tiles ── */
+.mc-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 10px;
+}
+
+.ct {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* ── Passing tile ── */
+.ct-pass {
+  background: rgba(0, 255, 65, 0.06);
+  border: 1px solid rgba(0, 255, 65, 0.18);
+}
+
+.ct-pass:hover {
+  background: rgba(0, 255, 65, 0.12);
+  border-color: rgba(0, 255, 65, 0.35);
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.12),
+              inset 0 0 20px rgba(0, 255, 65, 0.04);
+  transform: scale(1.04);
+}
+
+.ct-pass .ct-icon {
+  color: var(--accent-green);
+  text-shadow: 0 0 14px rgba(0, 255, 65, 0.6);
+}
+
+/* ── Failing tile ── */
+.ct-fail {
+  background: rgba(255, 71, 87, 0.06);
+  border: 1px solid rgba(255, 71, 87, 0.18);
+}
+
+.ct-fail:hover {
+  background: rgba(255, 71, 87, 0.12);
+  border-color: rgba(255, 71, 87, 0.35);
+  box-shadow: 0 0 20px rgba(255, 71, 87, 0.12),
+              inset 0 0 20px rgba(255, 71, 87, 0.04);
+  transform: scale(1.04);
+}
+
+.ct-fail .ct-icon {
+  color: var(--accent-red);
+  text-shadow: 0 0 14px rgba(255, 71, 87, 0.6);
+}
+
+/* ── Tile internals ── */
+.ct-icon {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ct-name {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-align: center;
+}
+
+.ct-pts {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+}
+
+/* ── Custom tooltip ── */
+.ov-tooltip {
+  position: fixed;
+  z-index: 10000;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 212, 255, 0.06);
+  pointer-events: none;
+  max-width: 320px;
+  min-width: 220px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.ov-tooltip-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tt-head {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  margin-bottom: 6px;
+}
+
+.tt-target {
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.tt-pts {
+  font-size: 0.8rem;
+  color: var(--accent-yellow);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.tt-line {
+  height: 1px;
+  background: var(--border-color);
+  margin: 8px 0;
+}
+
+.tt-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.tt-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-color);
+  text-transform: uppercase;
+}
+
+.tt-st-pass {
+  color: var(--accent-green);
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+.tt-st-fail {
+  color: var(--accent-red);
+  text-shadow: 0 0 8px rgba(255, 71, 87, 0.3);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .ov-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ov-header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .ov-scores {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ov-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ov-round-num {
+    font-size: 1.8rem;
+  }
+}
+
+/* ── ECharts dark theme fix (scoreboard page) ── */
+.md-page [id*="teamBar"],
+.md-page [id*="teamLine"] {
+  background: transparent !important;
+}

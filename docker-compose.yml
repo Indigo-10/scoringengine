@@ -13,6 +13,8 @@ services:
     restart: on-failure
     volumes:
       - redis:/data
+    ports:
+      - "127.0.0.1:6379:6379"
     networks:
       - default
 
@@ -26,6 +28,8 @@ services:
     restart: on-failure
     volumes:
       - mysql:/var/lib/mysql
+    ports:
+      - "127.0.0.1:3306:3306"
     networks:
       - default
 
@@ -88,9 +92,13 @@ services:
       - base
       - redis
     restart: unless-stopped
-    networks:
-      - default
+    # Host networking so worker can reach target machines on internal network (10.1.x.x)
+    network_mode: host
     privileged: true
+    environment:
+      - SCORINGENGINE_REDIS_HOST=127.0.0.1
+      - SCORINGENGINE_DB_URI=mysql://se_user:ScoringEngine2026@127.0.0.1/scoring_engine?charset=utf8mb4
+    command: ["./wait-for-port.sh", "127.0.0.1:6379", "/app/bin/worker"]
 
   web:
     image: scoringengine/web

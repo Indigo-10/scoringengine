@@ -12,6 +12,9 @@
         <h2 class="text-center">Round Stats</h2>
     </div>
     <div class="row">
+        <div id="stats-error" class="alert alert-warning" style="display:none;">
+            <strong>Stats unavailable.</strong> The stats API returned an error. This may happen if no rounds have completed yet or the backend is still initializing.
+        </div>
         <table id="stats" class="table table-striped table-bordered table-compact" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -26,7 +29,10 @@
     </div>
 </div>
 <script>
-    $('#stats').DataTable( {
+$(document).ready(function() {
+    $.fn.dataTable.ext.errMode = 'none';
+
+    var table = $('#stats').DataTable({
         ajax: '/api/stats',
         order: [[0, 'desc']],
         columns: [
@@ -38,10 +44,15 @@
         "columnDefs": [{
             "targets": 4,
             "data": null,
-            "render": function ( data, type, row, meta ) {
-                return row.num_up_services + ' <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> / ' + row.num_down_services + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>';
+            "render": function(data, type, row, meta) {
+                return row.num_up_services + ' <span class="glyphicon glyphicon-chevron-up" aria-hidden="true" style="color:var(--accent-green)"></span> / ' + row.num_down_services + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="color:var(--accent-red)"></span>';
             }
         }]
-    } );
+    });
+
+    $('#stats').on('error.dt', function(e, settings, techNote, message) {
+        $('#stats-error').show();
+    });
+});
 </script>
 {% endblock %}

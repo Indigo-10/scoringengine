@@ -236,8 +236,8 @@ teams:
     port: 3306
     points: 100
     accounts:
-    - username: wordpress_user
-      password: wordpress_password
+    - username: wpuser
+      password: changeme
     environments:
     - matching_content: "wp_"
       properties:
